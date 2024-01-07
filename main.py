@@ -3,6 +3,8 @@ import requests
 import json
 import os
 import datetime
+from lxml import etree
+import xml.dom.minidom as minidom
 
 lat_lon_file = "latlon.csv"
 users_file = "users.csv"
@@ -142,7 +144,7 @@ def fetch_weather():
         weather_data = fetch_weather_data(latitude, longitude, 60, 3)
         if weather_data:
             with open(f"{csv_output_folder}/{city_name}.csv", "w") as f:
-                print(f"Writing {city_name}.csv")
+                # print(f"Writing {city_name}.csv")
                 f.write("Date and time,Weather Condition,Temperature\n")
                 for data in weather_data:
                     f.write(f"{data.date_time},{data.condition},{data.temperature}\n")
@@ -151,7 +153,7 @@ def fetch_weather():
 def get_weather_summarization():
     """
     Summarize the key information from the weather data.
-    :return raining_cities, snowing_cities, icing_cities, else_cities: list of cities
+    :return raining_cities, snowing_cities, icing_cities, else_cities, tomorrow: list of cities and tomorrow's date
     """
 
     raining_cities = []
@@ -186,7 +188,7 @@ def get_weather_summarization():
             else:
                 else_cities.append(city)
 
-    return raining_cities, snowing_cities, icing_cities, else_cities
+    return raining_cities, snowing_cities, icing_cities, else_cities, tomorrow
 
 
 def at_least(hours):
@@ -212,7 +214,7 @@ def print_weather_summary():
     Print the weather summary.
     :return:
     """
-    raining_cities, snowing_cities, icing_cities, else_cities = get_weather_summarization()
+    raining_cities, snowing_cities, icing_cities, else_cities, tomorrow = get_weather_summarization()
 
     print()
 
@@ -234,8 +236,49 @@ def print_weather_summary():
             print(city)
 
 
+def write_xml_for_weather_date():
+    """
+    Write the weather data to XML files.
+    :return:
+    """
+    raining_cities, snowing_cities, icing_cities, else_cities, tomorrow = get_weather_summarization()
+
+    root = etree.Element("WeatherForcasting")
+    date = etree.SubElement(root, "Date", Date=tomorrow)
+
+    good_weather = etree.SubElement(date, "GoodWeather")
+    good_weather.text = "Enjoy the weather if you are in these cities"
+    cities = etree.SubElement(good_weather, "cities")
+    for city in else_cities:
+        etree.SubElement(cities, "city", name=city)
+
+    poor_weather_raining = etree.SubElement(date, "PoorWeather", Issue="Raining")
+    poor_weather_raining.text = "Bring your umbrella if you are in these cities"
+    cities = etree.SubElement(poor_weather_raining, "cities")
+    for city in raining_cities:
+        etree.SubElement(cities, "city", name=city)
+
+    poor_weather_icing = etree.SubElement(date, "PoorWeather", Issue="Icing")
+    poor_weather_icing.text = "Mind your step if you are in these cities"
+    cities = etree.SubElement(poor_weather_icing, "cities")
+    for city in icing_cities:
+        etree.SubElement(cities, "city", name=city)
+
+    poor_weather_snowing = etree.SubElement(date, "PoorWeather", Issue="Snowing")
+    poor_weather_snowing.text = "Plan your journey thoroughly if you are in these cities"
+    cities = etree.SubElement(poor_weather_snowing, "cities")
+    for city in snowing_cities:
+        etree.SubElement(cities, "city", name=city)
+
+    to_string = etree.tostring(root, xml_declaration=True, encoding="utf-8")
+    dom = minidom.parseString(to_string)
+    with open(f"{tomorrow}.xml", "w") as f:
+        f.write(dom.toprettyxml())
+
+
 if __name__ == "__main__":
-    # plot_specific_towns()
+    plot_specific_towns()
     fetch_weather()
     get_weather_summarization()
     print_weather_summary()
+    write_xml_for_weather_date()
