@@ -16,8 +16,6 @@ weather_cities_list = ["Aberystwyth", "Bangor", "Birmingham", "Cardiff", "Derby"
                        "London", "Manchester", "Swansea"]
 
 csv_output_folder = "weather_data"
-if not os.path.exists(csv_output_folder):
-    os.makedirs(csv_output_folder)
 
 
 class LatLon:
@@ -181,6 +179,9 @@ def fetch_weather():
     for index, city in enumerate(read_towns()):
         if city.town_name in weather_cities_list:
             cities_with_lat_long.append((city.town_name, city.latitude, city.longitude))
+
+    if not os.path.exists(csv_output_folder):
+        os.makedirs(csv_output_folder)
 
     for city in cities_with_lat_long:
         city_name, latitude, longitude = city

@@ -628,16 +628,56 @@ The `more_than` function is defined as follows:
 
 This function calculates the number needed to fulfil the more than condition.
 
-### Task 1 Plotting Towns in England and Wales on UK Map
+### Task 1 - Plotting Towns in England and Wales on UK Map
 
 The first task includes plotting towns in England and Wales on UK Map. The program reads the towns data from `latlon.csv` file and plots those towns on a UKMap which fulfil any of the following criteria:
 - The town name starts with A, B, C, L or M.
 - The town name ends with “bury” or “ampton”.
 - The town name is Aberystwyth, Birmingham, Cardiff or London.
 
-This task follows the following steps:
-- Importing the required modules.
-- Defining the function `plot_specific_towns` that takes the following parameters:
-    - `towns_file`: the path to the file containing the towns data
-    - `map_image`: the path to the UK map image
-    - `output_image`: the path to the output image
+This task uses the `plot_specific_towns` function to plot the towns on the map. The definition of the `plot_specific_towns` function is as follows:
+
+![plot_specific_towns function](images/plot_specific_towns.png)
+
+The `plot_specific_towns` function reads the towns data from `latlon.csv` file and plots those towns on a UKMap which fulfil any of the given criteria. The steps followed by this function are as follows:
+- Read the towns data from `latlon.csv` file.
+- Initialise the UKMap object.
+- For each town in the list of towns:
+    - If the town name is Aberystwyth, Birmingham, Cardiff or London:
+        - Plot the town on the map with the marker `o`, marker size `6` and color `green`.
+    - Otherwise, if the town name starts with A, B, C, L or M or the town name ends with “bury” or “ampton”:
+        - Plot the town on the map with the marker `.`, marker size `1` and color `red`.
+- Show the map.
+
+The output of this task is as follows:
+
+![Task 1 output](images/task1-output.png)
+
+### Task 2 - Weather
+
+The second task includes accessing weather data using API. The program accesses the hourly weather forecast of 3 days at 9 cities using WeatherAPI. The weather forecast data covers 72 hours (i.e., 24 hours x 3 days) for each city with a forecasting interval of one hour.
+
+This task uses the `fetch_weather` function to fetch the weather data from weatherapi.com and write to csv files. The definition of the `fetch_weather` function is as follows:
+
+![fetch_weather function](images/fetch_weather.png)
+
+The `fetch_weather` function fetches the weather data from weatherapi.com and writes to csv files. The steps followed by this function are as follows:
+- Initialise the list of cities with latitude and longitude.
+- For each city in the list of towns:
+    - If the city is in the list of weather cities:
+        - Append the city name, latitude and longitude to the list of cities with latitude and longitude.
+- If the output folder does not exist:
+  - Create the output folder.
+- For each city in the list of cities with latitude and longitude:
+  - Get the city name, latitude and longitude.
+  - Fetch the weather data for the city.
+  - If the weather data is not empty:
+      - Open the CSV file for the city.
+      - Write the header to the CSV file.
+      - For each weather data in the weather data:
+          - Write the weather data to the CSV file.
+      - Close the CSV file.
+
+The output of this task is as follows:
+
+![Task 2 output](images/task2-output.png)
