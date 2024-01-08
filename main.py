@@ -55,6 +55,49 @@ class WeatherData:
         self.temperature = temperature
 
 
+# name.title, name.first, name.last, location.city, email, dob, phone
+class Name:
+    """
+    Name class
+
+    Attributes:
+        title (str): title of the name
+        first (str): first name
+        last (str): last name
+    """
+
+    def __init__(self, title, first, last):
+        self.title = title
+        self.first = first
+        self.last = last
+
+    def __str__(self):
+        return f"{self.title}. {self.first} {self.last}"
+
+
+class User:
+    """
+    User class
+
+    Attributes:
+        name (Name): name of the user
+        city (str): city of the user
+        email (str): email of the user
+        dob (str): date of birth of the user
+        phone (str): phone number of the user
+    """
+
+    def __init__(self, name, city, email, dob, phone):
+        self.name = name
+        self.city = city
+        self.email = email
+        self.dob = dob
+        self.phone = phone
+
+    def __str__(self):
+        return f"{self.name}, {self.city}, {self.email}, {self.dob}, {self.phone}"
+
+
 def read_towns():
     """
     Read in the towns data (from latlon.csv)
@@ -276,9 +319,100 @@ def write_xml_for_weather_date():
         f.write(dom.toprettyxml())
 
 
+def read_users():
+    """
+    Read in the users data (from users.csv)
+    :return users: list of User objects
+    """
+    users = []
+    try:
+        with open(users_file, "r") as f:
+            for line in f:
+                name_title, name_first, name_last, city, email, dob, phone = line.strip().split(",")
+                users.append(User(Name(name_title, name_first, name_last), city, email, dob, phone))
+        return users
+    except Exception as e:
+        print(e)
+
+
+def plot_user_cities():
+    """
+    Plot the cities of the users.
+    :return:
+    """
+
+    raining_cities, snowing_cities, icing_cities, else_cities, tomorrow = get_weather_summarization()
+
+    # Read in the users data
+    users = read_users()
+
+    # Read in the towns data
+    towns = read_towns()
+
+    # Initialise the UKMap object
+    uk_map = UKMap()
+
+    # Initialize the array to store number of users for each city,
+    # the weather condition, and the latitudes and longitudes
+    city_stats = []
+
+    highest_count = 0
+
+    for city in weather_cities_list:
+        lower = city.lower()
+        lat = 0
+        lon = 0
+        count = 0
+        for user in users:
+            if lower in user.city.lower():
+                count += 1
+
+        if count > highest_count:
+            highest_count = count
+
+        if city in raining_cities:
+            weather = "rain"
+        elif city in icing_cities:
+            weather = "ice"
+        elif city in snowing_cities:
+            weather = "snow"
+        else:
+            weather = "else"
+
+        for town in towns:
+            if city == town.town_name:
+                lat = town.latitude
+                lon = town.longitude
+
+        city_stats.append([city, count, weather, lat, lon])
+
+    highest_marker_size = 15
+
+    for city in city_stats:
+        city_name, count, weather, lat, lon = city
+        if count > 0:
+            marker_size = (count / highest_count) * highest_marker_size
+
+            if weather == "rain":
+                marker = "^"
+                color = "red"
+            elif weather == "ice":
+                marker = "D"
+                color = "cyan"
+            elif weather == "snow":
+                marker = "*"
+                color = "blue"
+            else:
+                marker = "o"
+                color = "green"
+            uk_map.plot(lon, lat, marker=marker, markersize=marker_size, color=color)
+    uk_map.show()
+
+
 if __name__ == "__main__":
     plot_specific_towns()
     fetch_weather()
     get_weather_summarization()
     print_weather_summary()
     write_xml_for_weather_date()
+    plot_user_cities()
