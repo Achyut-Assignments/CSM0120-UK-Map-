@@ -208,7 +208,6 @@ def get_weather_summarization():
     tomorrow = (today + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
 
     for city in weather_cities_list:
-        rows = []
         with open(f"{csv_output_folder}/{city}.csv", "r") as f:
             series_of_rainy_hours = 0
             series_of_snowy_hours = 0
