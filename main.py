@@ -408,10 +408,23 @@ def plot_user_cities():
     uk_map.show()
 
 
-if __name__ == "__main__":
+def main():
+    """
+        Main function
+
+        This function will call the following functions:
+        • plot_specific_towns to plot the towns in the map
+        • fetch_weather to fetch the weather data from weatherapi.com and write to csv files
+        • print_weather_summary to print the weather forecast summary
+        • write_xml_for_weather_date to write the weather data to XML files
+        • plot_user_cities to plot the cities of the users who subscribed to the weather forecast service
+        """
     plot_specific_towns()
     fetch_weather()
-    get_weather_summarization()
     print_weather_summary()
     write_xml_for_weather_date()
     plot_user_cities()
+
+
+if __name__ == "__main__":
+    main()
