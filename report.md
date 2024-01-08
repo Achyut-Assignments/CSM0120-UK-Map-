@@ -1,428 +1,4 @@
-# The Report
-
-[//]: # (2.1 Programming)
-
-[//]: # (Code quality: Make sure all the code you are going to write will be available as reusable )
-
-[//]: # (functions: at least one function for each question you have answered. Your functions should )
-
-[//]: # (take parameters/arguments and should return values. Add a main function which )
-
-[//]: # (demonstrates how to use your other functions. Your code should be well commented, well )
-
-[//]: # (tested, well documented, with proper exception handling and should be able to identify )
-
-[//]: # (incorrect input. Your code should be written elegantly and should produce the correct output. )
-
-[//]: # (The marks for each task &#40;mentioned below&#41; are also associated to code quality.)
-
-[//]: # (Part 1: UK Map)
-
-[//]: # (Task 1: [10 marks] Plotting Towns in England and Wales on UK Map)
-
-[//]: # (You are provided a file called latlon.csv that contains latitudes and longitudes for towns )
-
-[//]: # (in England and Wales. Each line contains 3 fields: town name, latitude and )
-
-[//]: # (longitude. You are also given a module UKMap.py, which provides a class UKMap with )
-
-[//]: # (handy functions &#40;note that an image Gb4dot_merged_mapcolors.png, provided on )
-
-[//]: # (Blackboard with assignment 2 resources, is required to run UKMap.py&#41;. )
-
-[//]: # (Write a Python function plot_specific_towns to read in the towns data &#40;from )
-
-[//]: # (latlon.csv&#41; and plot those towns on a UKMap which fulfil any of the following criteria.)
-
-[//]: # (• The town name starts with A, B, C, L or M.)
-
-[//]: # (• The town name ends with “bury” or “ampton”. )
-
-[//]: # (You must make sure that Aberystwyth, Birmingham, Cardiff and London are easily found on )
-
-[//]: # (the map, i.e., choose a different marker and marker size for them or perhaps annotate them. )
-
-[//]: # (Test your code and demonstrate that you are confident that it is producing a correct plot. Due )
-
-[//]: # (to the fact that the Earth is spherical and maps are two-dimensional, there will be some )
-
-[//]: # (distortion when plotting locations. For instance, you may find that some locations fall slightly )
-
-[//]: # (below the south coast.)
-
-[//]: # (Part 2: Weather)
-
-[//]: # (This part of assignment requires you to develop programs which automatically access )
-
-[//]: # (weather forecasts of the next five days of 9 cities in England and Wales, and provide general )
-
-[//]: # (suggestions to the residents in these cities. The 9 cities considered in this assignment include:)
-
-[//]: # (Aberystwyth Bangor Birmingham)
-
-[//]: # (Cardiff Derby Leeds)
-
-[//]: # (London Manchester Swansea)
-
-[//]: # (In this part, you are asked to perform the following tasks:)
-
-[//]: # (• Automatically access online data;)
-
-[//]: # (• Extract, process and store key information from online data;)
-
-[//]: # (• Present the key information in XML form elegantly; • Plot the cities on UK Map indicating different weather conditions and indicating which )
-
-[//]: # (cities have more subscribed users than users.)
-
-[//]: # (You will be using the free weather API from WeatherAPI to get access to the weather )
-
-[//]: # (forecast data. The link to WeatherAPI is https://www.weatherapi.com. In particular, you )
-
-[//]: # (will be using the 14 day weather forecast API from WeatherAPI. Its documentation is )
-
-[//]: # (available at https://www.weatherapi.com/docs/. You should fetch the temperature in Celcius)
-
-[//]: # (for both APIs.)
-
-[//]: # (You need to first register with WeatherAPI before using its API. Please use the free option )
-
-[//]: # (while registering on the website. Once you complete the registration, you will be able to get )
-
-[//]: # (your API key by clicking My Account. )
-
-[//]: # (This API key is a combination of 31 alphanumeric characters in a similar form as follow:)
-
-[//]: # (2edb***********************2805)
-
-[//]: # (Please provide your API key in the submission so that your program can work properly.)
-
-[//]: # (When you will use 14 day weather forecast API from WeatherAPI, we are mainly interested )
-
-[//]: # (in time &#40;datetime&#41;, temp_c &#40;temperature&#41; and condition->text &#40;weather condition&#41;)
-
-[//]: # (attributes of hourly forecast. You can find them under forecast->forecastday-)
-
-[//]: # (>hour->time &#40;for datetime&#41;, forecast->forecastday->hour->temp_c &#40;for )
-
-[//]: # (temperature&#41; and forecast->forecastday->hour->condition->text &#40;for )
-
-[//]: # (weather condition&#41; for each hour.)
-
-[//]: # (Task 2: [10 marks] Accessing weather data using API )
-
-[//]: # (Write a program that can access the hourly weather forecast of 3 days at 9 cities &#40;mentioned )
-
-[//]: # (above&#41; using WeatherAPI. The weather forecast data should cover 72 hours &#40;i.e., 24 hours )
-
-[//]: # (x 3 days&#41; for each city with a forecasting interval of one hour. )
-
-[//]: # (Task 3: [15 marks] Extracting and storing information from online data)
-
-[//]: # (Write a program that processes weather forecast data obtained from WeatherAPI)
-
-[//]: # (&#40;obtained in Task 1&#41; so that only the information of datetime, weather condition and )
-
-[//]: # (temperature is stored in csv files. The program should store the extracted forecast of 3 days )
-
-[//]: # (at 9 cities into 9 individual csv files &#40;one csv file per city&#41; in a similar form as mentioned in the )
-
-[//]: # (example below in Table 1.)
-
-[//]: # (For each csv file, name it as `<city name>.csv. For example, if the csv file stores the information )
-
-[//]: # (extract at Aberystwyth, name the csv file as Aberystwyth.csv.)
-
-[//]: # (Table 1. Example for format of storing data into csv files.)
-
-[//]: # (Date and time Weather condition Temperature)
-
-[//]: # (2023-11-02 00:00 Moderate rain 7.4)
-
-[//]: # (2023-11-02 01:00 Light rain 8.0)
-
-[//]: # (2023-11-02 02:00 Light rain 8.7)
-
-[//]: # (… … …)
-
-[//]: # (2023-11-04 23:00 Mist 7.2)
-
-[//]: # (Task 4: [20 marks] Summarizing key information from online data)
-
-[//]: # (Write a program that divides the 9 cities into four categories: raining, snowing, icing)
-
-[//]: # (and else based on the weather condition and temperature in the next day &#40;e.g., if today is )
-
-[//]: # (2023-11-02, the program should only consider the weather forecast data covering the period )
-
-[//]: # (from 2023-11-03 00:00:00 to 2023-11-03 23:59:59&#41; and prints suggestion&#40;s&#41; for the citizens in )
-
-[//]: # (the console following the template given below. )
-
-[//]: # (At a time, a city can appear in one of the four categories based on the following criteria:)
-
-[//]: # (• A city will be categorised as raining if the value of weather condition )
-
-[//]: # (&#40;condition->text&#41; contains "rain" or "drizzle" for at least six hours )
-
-[//]: # (between the time period from 06:00:00 to 23:59:59. )
-
-[//]: # (• Otherwise, a city will be categorized as snowing if the value of weather condition )
-
-[//]: # (&#40;condition->text&#41; contains "snow" or "blizzard" for at least four hours )
-
-[//]: # (between the time period from 00:00:00 to 23:59:59. )
-
-[//]: # (• Otherwise, a city will be categorized as icing if the temperature is below 0 Celsius )
-
-[//]: # (degree for more than eight hours between the time period from 00:00:00 to 23:59:59. )
-
-[//]: # (• Otherwise, a city belongs to the category else.)
-
-[//]: # (Based on the categories that the 9 cities belong to, the program should print a suggestion )
-
-[//]: # (message on the console for the citizens living in the 9 cities. For the cities belonging to the )
-
-[//]: # (category raining, citizens should receive a suggestion of “Bring your umbrella”. For the )
-
-[//]: # (cities belonging to the category icing, citizens should receive a suggestion of “Mind your )
-
-[//]: # (step” as water on the floor may get frozen. For the cities belonging to the category snowing, )
-
-[//]: # (citizens should receive a suggestion of “Plan your journey thoroughly”. For the cities )
-
-[//]: # (belonging to the category else, citizens should receive a suggestion of “Enjoy the weather”. )
-
-[//]: # (The template of the message is given as follows &#40;“XXXXXXXXXX” is a city name&#41;. )
-
-[//]: # (Enjoy the weather if you are living in these cities: )
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # (Bring your umbrella if you are in these cities: )
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # (Mind your step if you are in these cities: )
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # (Plan your journey thoroughly if you are in these cities:)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # ( XXXXXXXXXX)
-
-[//]: # (Note that, if there is no city belonging to a specify category, there is no need for giving that )
-
-[//]: # (suggestion. For example, if all the cities are going to rain in the next day, the message should )
-
-[//]: # (appear as:)
-
-[//]: # (Bring your umbrella if you are in these cities: )
-
-[//]: # ( Aberystwyth)
-
-[//]: # ( Bangor)
-
-[//]: # ( Birmingham)
-
-[//]: # ( Cardiff)
-
-[//]: # ( Derby)
-
-[//]: # ( Leeds)
-
-[//]: # ( London)
-
-[//]: # ( Manchester)
-
-[//]: # ( Swansea)
-
-[//]: # (If four cities belong to the category else and the other five cities belong to the category )
-
-[//]: # (icing, the message should appear as:)
-
-[//]: # (Enjoy the weather if you are in these cities: )
-
-[//]: # ( Aberystwyth)
-
-[//]: # ( Bangor)
-
-[//]: # ( Birmingham)
-
-[//]: # ( Manchester)
-
-[//]: # (Mind your step if you are in these cities: )
-
-[//]: # ( Cardiff)
-
-[//]: # ( Derby)
-
-[//]: # ( Leeds)
-
-[//]: # ( London)
-
-[//]: # ( Swansea)
-
-[//]: # (Task 5: [15 marks] Presenting data in the XML format)
-
-[//]: # (Write a program that converts the message &#40;from Task 4&#41; into an easy-to-interpret XML form )
-
-[//]: # (and save as <date>.xml. The purpose is that other people can directly access the general )
-
-[//]: # (suggestions without executing the program. Your XML data should follow the template )
-
-[//]: # (provided below in Listing 1.)
-
-[//]: # (<?xml version="1.0" encoding="UTF-8"?>)
-
-[//]: # (<WeatherForcasting>)
-
-[//]: # ( <Date Date="2023-11-03">)
-
-[//]: # ( <GoodWeather>)
-
-[//]: # ( Enjoy the weather if you are in these cities)
-
-[//]: # ( <cities>)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( </cities>)
-
-[//]: # ( </GoodWeather>)
-
-[//]: # ( <PoorWeather Issue="Raining">)
-
-[//]: # ( Bring your umbrella if you are in these cities)
-
-[//]: # ( <cities>)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( </cities>)
-
-[//]: # ( </PoorWeather>)
-
-[//]: # ( <PoorWeather Issue="Icing">)
-
-[//]: # ( Mind your step if you are in these cities)
-
-[//]: # ( <cities>)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( </cities>)
-
-[//]: # ( </PoorWeather>)
-
-[//]: # ( <PoorWeather Issue="Snowing">)
-
-[//]: # ( Plan your journey thoroughly if you are in these cities)
-
-[//]: # ( <cities>)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( <city name="XXXXXXXXXXX" />)
-
-[//]: # ( </cities>)
-
-[//]: # ( </PoorWeather>)
-
-[//]: # ( </Date>)
-
-[//]: # (</WeatherForcasting>)
-
-[//]: # (Listing 1. XML Format of printing summarized forecast temperature information.)
-
-[//]: # (Task 6: [10 marks] Plotting Cities Showing Weather Conditions and Size of Subscribed Users)
-
-[//]: # (You are provided with a file users.csv that shows the users in the UK who have signed up )
-
-[//]: # (to receive weather information. Write a program that plots all 9 cities from latlon.csv on )
-
-[//]: # (UK map using UKMap.py &#40;as done in Task 1&#41;. This time, the marker size of each city should )
-
-[//]: # (reflect the number of users who have signed up for that city &#40;you need to count the number )
-
-[//]: # (of subscribers for each city using users.csv&#41; and the choice of marker shape should be as )
-
-[//]: # (follows: • Use red triangle if it is raining)
-
-[//]: # (• Use cyan diamond if it is icing )
-
-[//]: # (• Use blue star if it is snowing )
-
-[//]: # (• Use green circle if it is anything else)
-
-[//]: # (Note that if no user is subscribed to a city, then you should not plot anything for that city on )
-
-[//]: # (the map. )
-
-[//]: # (2.2 Report [20 marks])
-
-[//]: # (Write a report about your work. The report will have four sections given equal weight:)
-
-[//]: # (i. Executive summary)
-
-[//]: # (Give an outline of the work done. This section should describe what your program does )
-
-[//]: # (without reference to implementation details and should be easy to understand for someone )
-
-[//]: # (who has never programmed before.)
-
-[//]: # (ii. Technical overview)
-
-[//]: # (Provide justification of the implementation choices you made. This section should explain, for )
-
-[//]: # (example, what kinds of loops you have used and why, what kinds of data structures you have )
-
-[//]: # (used, how you have dealt with any special or unusual cases, how you processed the data and )
-
-[//]: # (how you produced the output.)
-
-[//]: # (iii. Software testing)
-
-[//]: # (Describe how you can be sure that the output you produce is correct. Describe how you have )
-
-[//]: # (tested the individual functions and how you tested the code as a whole.)
-
-[//]: # (iv. Reflections and future work)
-
-[//]: # (Discuss how your code could be improved and extended. Include an estimate of the total time )
-
-[//]: # (you took on this exercise.`)
-
-## Executive Summary
+# Executive Summary
 
 This report delineates the development of a Python program for weather forecasting. The program incorporates six major
 tasks, the first one includes plotting towns in England and Wales on UK Map. The second one encompasses accessing
@@ -430,7 +6,7 @@ weather data using API. Similarly, the third one includes extracting and storing
 fourth one includes summarizing key information from online data. The fifth one includes presenting data in the XML
 format. Finally, the sixth task includes plotting cities showing weather conditions and size of subscribed users.
 
-## Technical Overview 
+# Technical Overview 
 
 For the technical part, let's cover what we are provided with:
 - A file `latlon.csv` that contains latitudes and longitudes for towns in England and Wales. Each line contains 3 fields: town name, latitude and longitude.
@@ -438,7 +14,7 @@ For the technical part, let's cover what we are provided with:
 - An image `Gb4dot_merged_mapcolors.png`, is the UK map in which the plot will be made. This image is required to run UKMap.py.
 - A file `users.csv` that shows the users in the UK who have signed up to receive weather information.
 
-### Importing the required modules
+## Importing the required modules
 
 The program imports the following modules:
 
@@ -450,7 +26,7 @@ The program imports the following modules:
 - `etree` from `lxml` to create and parse XML data.
 - `minidom` from `xml.dom` to format XML data.
 
-### Defining the constants/variables
+## Defining the constants/variables
 
 The program defines the following constants/variables:
 
@@ -463,7 +39,7 @@ The program defines the following constants/variables:
 - `weather_cities_list`: the list of cities for which the weather forecast is to be fetched
 - `csv_output_folder`: the folder where the CSV weather data will be stored
 
-### Defining the main function
+## Defining the main function
 
 The main function is defined as follows:
 
@@ -476,11 +52,11 @@ The main function calls the following functions:
 - `write_xml_for_weather_date` to write the weather data to XML files
 - `plot_user_cities` to plot the cities of the users who subscribed to the weather forecast service
 
-### Defining the classes
+## Defining the classes
 
 The program defines the following classes:
 
-#### LatLon
+### LatLon
 
 The `LatLon` class is defined as follows:
 
@@ -493,7 +69,7 @@ This class is used to store the data of a town. The `LatLon` class has the follo
     - `longitude`: the longitude of the town
 - `__str__`: returns a string representation of the town
 
-#### WeatherData
+### WeatherData
 
 The `WeatherData` class is defined as follows:
 
@@ -505,7 +81,7 @@ This class is used to store the weather data of a town. The `WeatherData` class 
     - `condition`: the weather condition
     - `temperature`: the temperature in Celsius
 
-#### Name
+### Name
 
 The `Name` class is defined as follows:
 
@@ -519,7 +95,7 @@ This class is used to store the name of a user. The `Name` class has the followi
     - `last`: the last name
 - `__str__`: returns a string representation of the name
 
-#### User
+### User
 
 The `User` class is defined as follows:
 
@@ -535,11 +111,11 @@ This class is used to store the data of a user. The `User` class has the followi
     - `phone`: the phone number of the user
 - `__str__`: returns a string representation of the user
 
-### Defining the required functions
+## Defining the required functions
 
 The program defines the following functions:
 
-#### read_towns
+### read_towns
 
 The `read_towns` function is defined as follows:
 
@@ -555,7 +131,7 @@ The steps followed by this function are as follows:
 - Return the list of towns. 
 - Handle any exceptions.
 
-#### read_users
+### read_users
 
 The `read_users` function is defined as follows:
 
@@ -572,22 +148,7 @@ The steps followed by this function are as follows:
 - Handle any exceptions.
 - The `Name` object is created by passing the title, first name and last name to the constructor of the `Name` class.
 
-#### fetch_weather_data
-
-The `fetch_weather_data` function is defined as follows:
-
-![fetch_weather_data function](images/fetch_weather_data.png)
-
-This function fetches the weather data from weatherapi.com and returns a list of `WeatherData` objects.
-The steps followed by this function are as follows:
-- Construct the URL for the API call.
-- Make the API call.
-- Parse the JSON response.
-- Extract the required data from the JSON response.
-- Return the list of `WeatherData` objects.
-- Handle any exceptions.
-
-#### get_weather_summarization
+### get_weather_summarization
 
 The `get_weather_summarization` function is defined as follows:
 
@@ -612,7 +173,7 @@ The steps followed by this function are as follows:
     - Return the list of cities and tomorrow's date.
 - Handle any exceptions.
 
-#### at_least
+### at_least
 
 The `at_least` function is defined as follows:
 
@@ -620,7 +181,7 @@ The `at_least` function is defined as follows:
 
 This function calculates the number needed to fulfil the at least condition.
 
-#### more_than
+### more_than
 
 The `more_than` function is defined as follows:
 
@@ -628,7 +189,7 @@ The `more_than` function is defined as follows:
 
 This function calculates the number needed to fulfil the more than condition.
 
-### Task 1 - Plotting Towns in England and Wales on UK Map
+## Task 1 - Plotting Towns in England and Wales on UK Map
 
 The first task includes plotting towns in England and Wales on UK Map. The program reads the towns data from `latlon.csv` file and plots those towns on a UKMap which fulfil any of the following criteria:
 - The town name starts with A, B, C, L or M.
@@ -649,13 +210,33 @@ The `plot_specific_towns` function reads the towns data from `latlon.csv` file a
         - Plot the town on the map with the marker `.`, marker size `1` and color `red`.
 - Show the map.
 
-The output of this task is as follows:
-
-![Task 1 output](images/task1-output.png)
-
-### Task 2 - Weather
+## Task 2 - Accessing weather data using API
 
 The second task includes accessing weather data using API. The program accesses the hourly weather forecast of 3 days at 9 cities using WeatherAPI. The weather forecast data covers 72 hours (i.e., 24 hours x 3 days) for each city with a forecasting interval of one hour.
+
+The `fetch_weather_data` function is used to fetch the weather data from weatherapi.com. The definition of the `fetch_weather_data` function is as follows:
+
+![fetch_weather_data function](images/fetch_weather_data.png)
+
+This function fetches the weather data from weatherapi.com and returns a list of `WeatherData` objects.
+
+This function takes the following parameters:
+- `latitude`: the latitude of the city
+- `longitude`: the longitude of the city
+- `tp`: the time period interval for which the weather data is to be fetched (in hours)
+- `days`: the number of days for which the weather data is to be fetched
+
+The steps followed by this function are as follows:
+- Construct the URL for the API call.
+- Make the API call.
+- Parse the JSON response.
+- Extract the required data from the JSON response.
+- Return the list of `WeatherData` objects.
+- Handle any exceptions.
+
+## Task 3 - Extracting and Storing Information from Online Data
+
+The third task includes extracting and storing weather data in `csv` file. The program accesses the hourly weather forecast of 3 days at 9 cities using WeatherAPI. The weather forecast data covers 72 hours (i.e., 24 hours x 3 days) for each city with a forecasting interval of one hour.
 
 This task uses the `fetch_weather` function to fetch the weather data from weatherapi.com and write to csv files. The definition of the `fetch_weather` function is as follows:
 
@@ -678,6 +259,171 @@ The `fetch_weather` function fetches the weather data from weatherapi.com and wr
           - Write the weather data to the CSV file.
       - Close the CSV file.
 
-The output of this task is as follows:
+## Task 4 - Summarizing key information from online data
+
+The fourth task includes summarizing key information from online data. The program divides the 9 cities into four categories: raining, snowing, icing and else based on the weather condition and temperature in the next day.
+
+This task uses the `print_weather_summary` function to print the weather forecast summary. The definition of the `print_weather_summary` function is as follows:
+
+![print_weather_summary function](images/print_weather_summary.png)
+
+The `print_weather_summary` function prints the weather forecast summary. The steps followed by this function are as follows:
+
+- Get the list of cities and tomorrow's date from the `get_weather_summarization` function.
+- If the list of each cities is not empty:
+    - Print the message according to the weather forecast summary.
+    - For each city in the list of else cities:
+        - Print the city.
+- If the list of raining cities is empty:
+    - Skip the message.
+    - Skip the list of cities.
+
+## Task 5 - Presenting data in the XML format
+
+The fifth task includes presenting data in the XML format. The program converts the message (from Task 4) into an easy-to-interpret XML form and saves as `<date>.xml`.
+
+This task uses the `write_xml_for_weather_date` function to write the weather data to XML files. The definition of the `write_xml_for_weather_date` function is as follows:
+
+![write_xml_for_weather_date function](images/write_xml_for_weather_date.png)
+
+The `write_xml_for_weather_date` function writes the weather data to XML files. The steps followed by this function are as follows:
+- Get the list of cities and tomorrow's date from the `get_weather_summarization` function.
+- Initialise the root element.
+- Initialise the date element with the date attribute.
+- For each of "Good Weather", "Poor Weather with 'Raining' issue", "Poor Weather with 'Icing' issue" and "Poor Weather with 'Snowing' issue":
+  - Initialise the weather element.
+    - The text of the weather element is set to:
+      - "Enjoy the weather if you are in these cities" for "Good Weather".
+      - "Bring your umbrella if you are in these cities" for "Poor Weather with 'Raining' issue".
+      - "Mind your step if you are in these cities" for "Poor Weather with 'Icing' issue".
+      - "Plan your journey thoroughly if you are in these cities" for "Poor Weather with 'Snowing' issue".
+    - Initialise the cities element inside the weather element.
+    - For each city in the list of respective cities:
+      - Initialise the city element inside the cities element.
+      - Set the name attribute of the city element to the city.
+      - Append the city element to the cities element.
+      - Append the cities element to the weather element.
+
+## Task 6 - Plotting Cities Showing Weather Conditions and Size of Subscribed Users
+
+The sixth task includes plotting cities showing weather conditions and size of subscribed users. The program plots all 9 cities from `latlon.csv` on UK map using UKMap.py.
+
+This task uses the `plot_user_cities` function to plot the cities of the users who subscribed to the weather forecast service. The definition of the `plot_user_cities` function is as follows:
+
+![plot_user_cities function](images/plot_user_cities.png)
+
+The `plot_user_cities` function plots all 9 cities from `latlon.csv` on UK map using UKMap.py. The steps followed by this function are as follows:
+- Get the list of cities and tomorrow's date from the `get_weather_summarization` function.
+- Read the users data from `users.csv` file using the `read_users` function.
+- Read the towns data from `latlon.csv` file using the `read_towns` function.
+- Initialise the UKMap object.
+- Initialise the array to store number of users for each city, the weather condition, and the latitudes and longitudes.
+- Initialise the highest count to 0. It will be used to calculate the marker size.
+- For each city in the list of weather cities:
+    - Initialise the count to 0.
+    - For each user in the list of users:
+        - If the city is in the user's city:
+            - Increment the count.
+    - If the count is greater than the highest count:
+        - Set the highest count to the count.
+    - If the city is in the raining cities:
+        - Set the weather to "rain".
+    - Otherwise, if the city is in the icing cities:
+        - Set the weather to "ice".
+    - Otherwise, if the city is in the snowing cities:
+        - Set the weather to "snow".
+    - Otherwise:
+        - Set the weather to "else".
+    - For each town in the list of towns:
+        - If the city is the town name:
+            - Set the latitude and longitude to the town's latitude and longitude.
+    - Append the city name, count, weather, latitude and longitude to the city stats array.
+- Initialise the highest marker size to 15. It will be used to calculate the marker size.
+- For each city in the city stats array:
+    - Get the city name, count, weather, latitude and longitude.
+    - If the count is greater than 0:
+        - Calculate the marker size.
+        - If the weather is "rain":
+            - Set the marker to "^".
+            - Set the color to "red".
+        - Otherwise, if the weather is "ice":
+            - Set the marker to "D".
+            - Set the color to "cyan".
+        - Otherwise, if the weather is "snow":
+            - Set the marker to "*".
+            - Set the color to "blue".
+        - Otherwise:
+            - Set the marker to "o".
+            - Set the color to "green".
+        - Plot the city on the map with the marker, marker size and color.
+- Show the map.
+
+# Software Testing
+
+## Task 1
+
+The `plot_specific_towns` function is expected to plot the towns in the map. The output of this function is as follows:
+
+![Task 1 output](images/task1-output.png)
+
+Here, the towns Aberystwyth, Birmingham, Cardiff and London are plotted with a green circle of size 6. The towns starting with A, B, C, L or M or ending with “bury” or “ampton” are plotted with a red dot of size 1.
+
+## Task 2
+
+The `fetch_weather_data` function is expected to fetch the weather data from weatherapi.com and return a list of `WeatherData` objects. The output of this function is as follows:
 
 ![Task 2 output](images/task2-output.png)
+
+## Task 3
+
+The `fetch_weather` function is expected to fetch the weather data from weatherapi.com and write to csv files. The output of this function is as follows:
+
+![Task 3 output](images/task3-output.png)
+
+The files are stored in the `weather_data` folder. It contains the CSV files for each city.
+
+The preview of `Aberystwyth.csv` among the CSV files is as follows:
+
+![Aberystwyth.csv](images/task3-output2.png)
+
+The format of the CSV files is: `Date and time`, `Weather condition`, `Temperature`
+
+## Task 4
+
+The `print_weather_summary` function is expected to print the weather forecast summary. The output of this function is as follows:
+
+![Task 4 output](images/task4-output.png)
+
+Here:
+- The cities Aberystwyth, Birmingham, Cardiff, London, Manchester and Swansea are in the else category.
+- The cities Bangor and Leeds are in the raining category.
+- The city Derby is in the icing category.
+- There are no cities in the snowing category.
+
+## Task 5
+
+The `write_xml_for_weather_date` function is expected to write the weather data to XML files. The output of this function is as follows:
+
+![Task 5 output](images/task5-output.png)
+
+This test was performed on `2024-01-09`. So, the XML file is named `2024-01-10.xml`.
+
+## Task 6
+
+The `plot_user_cities` function is expected to plot the cities of the users who subscribed to the weather forecast service. The output of this function is as follows:
+
+![Task 6 output](images/task6-output.png)
+
+Here, the plotting is done according to the criteria and the number of users subscribed to the weather forecast service.
+
+# Reflections and Future Work
+
+The program could be improved and extended in the following ways:
+
+- **Dynamic cities**: The program could be improved by making the cities dynamic. Currently, the cities are hardcoded in the program. The program could be improved by making the cities dynamic. The program could read the cities from a file or database and plot those cities on the map.
+- **More weather conditions**: The program could be improved by adding more weather conditions. Currently, the program only checks for rain, snow and ice. The program could be improved by adding more weather conditions and checking for those weather conditions.
+- **Improved way of storing weather data**: Currently, the program stores the weather data in CSV files. The program could be improved by storing the weather data in a database.
+- **Broadcasting the weather forecast**: Currently, the program only prints the weather forecast summary. The program could be improved by broadcasting the weather forecast summary to the users who subscribed to the weather forecast service.
+- **More user-friendly**: Currently, the program runs and prints the output in console. The program could be improved by making it more user-friendly. The program could be improved by adding a GUI and making it more interactive.
+- **Error handling**: Currently, the program does not handle errors. The program could be improved by handling errors. The program could be improved by handling errors and displaying appropriate error messages to the user.
+- **Performance**: Currently, the program handles a small amount of data. The program could be improved by handling a large amount of data. This could be done by optimising the code and making it more efficient.
