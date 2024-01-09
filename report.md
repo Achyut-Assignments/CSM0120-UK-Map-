@@ -254,6 +254,7 @@ The `fetch_weather` function fetches the weather data from weatherapi.com and wr
   - Fetch the weather data for the city.
   - If the weather data is not empty:
       - Open the CSV file for the city.
+      - Print the currently processing city. (currently commented out)
       - Write the header to the CSV file.
       - For each weather data in the weather data:
           - Write the weather data to the CSV file.
@@ -290,19 +291,47 @@ The `write_xml_for_weather_date` function writes the weather data to XML files. 
 - Get the list of cities and tomorrow's date from the `get_weather_summarization` function.
 - Initialise the root element.
 - Initialise the date element with the date attribute.
-- For each of "Good Weather", "Poor Weather with 'Raining' issue", "Poor Weather with 'Icing' issue" and "Poor Weather with 'Snowing' issue":
-  - Initialise the weather element.
-    - The text of the weather element is set to:
-      - "Enjoy the weather if you are in these cities" for "Good Weather".
-      - "Bring your umbrella if you are in these cities" for "Poor Weather with 'Raining' issue".
-      - "Mind your step if you are in these cities" for "Poor Weather with 'Icing' issue".
-      - "Plan your journey thoroughly if you are in these cities" for "Poor Weather with 'Snowing' issue".
+- For "Good Weather":
+    - Initialise the weather element.
+    - The text of the weather element is set to "Enjoy the weather if you are in these cities".
     - Initialise the cities element inside the weather element.
-    - For each city in the list of respective cities:
-      - Initialise the city element inside the cities element.
-      - Set the name attribute of the city element to the city.
-      - Append the city element to the cities element.
-      - Append the cities element to the weather element.
+    - For each city in the list of else cities:
+        - Initialise the city element inside the cities element.
+        - Set the name attribute of the city element to the city.
+        - Append the city element to the cities element.
+    - Append the cities element to the weather element.
+- For "Poor Weather with 'Raining' issue":
+    - Initialise the weather element.
+    - The text of the weather element is set to "Bring your umbrella if you are in these cities".
+    - Initialise the cities element inside the weather element.
+    - For each city in the list of raining cities:
+        - Initialise the city element inside the cities element.
+        - Set the name attribute of the city element to the city.
+        - Append the city element to the cities element.
+    - Append the cities element to the weather element.
+- For "Poor Weather with 'Icing' issue":
+    - Initialise the weather element.
+    - The text of the weather element is set to "Mind your step if you are in these cities".
+    - Initialise the cities element inside the weather element.
+    - For each city in the list of icing cities:
+        - Initialise the city element inside the cities element.
+        - Set the name attribute of the city element to the city.
+        - Append the city element to the cities element.
+    - Append the cities element to the weather element.
+- For "Poor Weather with 'Snowing' issue":
+    - Initialise the weather element.
+    - The text of the weather element is set to "Plan your journey thoroughly if you are in these cities".
+    - Initialise the cities element inside the weather element.
+    - For each city in the list of snowing cities:
+        - Initialise the city element inside the cities element.
+        - Set the name attribute of the city element to the city.
+        - Append the city element to the cities element.
+    - Append the cities element to the weather element.
+- Initialise the XML document.
+- Set the root element of the XML document to the root element.
+- Convert the XML document to a string.
+- Format the XML string.
+- Write the XML string to the XML file.
 
 ## Task 6 - Plotting Cities Showing Weather Conditions and Size of Subscribed Users
 
