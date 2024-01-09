@@ -368,11 +368,15 @@ The `plot_specific_towns` function is expected to plot the towns in the map. The
 
 Here, the towns Aberystwyth, Birmingham, Cardiff and London are plotted with a green circle of size 6. The towns starting with A, B, C, L or M or ending with “bury” or “ampton” are plotted with a red dot of size 1.
 
+The possible errors in this task occurs with the plotting. The plotting of the towns can be distorted due to Earth being spherical and the map being two-dimensional.
+
 ## Task 2
 
 The `fetch_weather_data` function is expected to fetch the weather data from weatherapi.com and return a list of `WeatherData` objects. The output of this function is as follows:
 
 ![Task 2 output](images/task2-output.png)
+
+Here, the weather data for the city Aberystwyth is fetched and printed. The weather data is fetched for 3 days with a forecasting interval of 1 hour.
 
 ## Task 3
 
@@ -406,7 +410,7 @@ The `write_xml_for_weather_date` function is expected to write the weather data 
 
 ![Task 5 output](images/task5-output.png)
 
-This test was performed on `2024-01-09`. So, the XML file is named `2024-01-10.xml`.
+This test was performed on `2024-01-09`. So, the XML file is named `2024-01-10.xml` and contains weather segmentation for `January 10, 2024`.
 
 ## Task 6
 
